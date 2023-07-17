@@ -1,0 +1,81 @@
+#include <stdio.h>
+
+#include <stdlib.h>
+
+// Structure for a binary tree node
+
+struct TreeNode {
+
+ int data;
+struct TreeNode* left;
+struct TreeNode* right;
+};
+
+// Function to create a new node
+
+struct TreeNode* createNode(int data)
+
+{
+
+struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+if (newNode == NULL) {
+    printf("Memory allocation failed!\n");
+    exit(1);
+}
+newNode->data = data;
+newNode->left = NULL;
+newNode->right = NULL;
+return newNode;
+}
+
+// Function to insert a node in the binary tree
+
+struct TreeNode* insertNode(struct TreeNode* root, int data)
+
+{
+
+ if (root == NULL) {
+    root = createNode(data);
+} else if (data <= root->data) {
+    root->left = insertNode(root->left, data);
+} else {
+    root->right = insertNode(root->right, data);
+}
+return root;
+}
+
+// Function to display the binary tree in inorder traversal
+
+void displayTree(struct TreeNode* root)
+
+{
+
+ if (root == NULL) {
+    return;
+}
+displayTree(root->left);
+printf("%d ", root->data);
+displayTree(root->right);
+}
+
+int main()
+
+{
+
+struct TreeNode* root = NULL;
+int numElements, data;
+int i;
+printf("Enter the number of elements: ");
+scanf("%d", &numElements);
+
+for ( i = 0; i < numElements; i++) {
+    printf("Enter element %d: ", i + 1);
+    scanf("%d", &data);
+    root = insertNode(root, data);
+    printf("Binary Tree after inserting %d: ", data);
+    displayTree(root);
+    printf("\n");
+}
+
+return 0;
+}
